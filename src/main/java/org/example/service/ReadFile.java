@@ -1,19 +1,16 @@
 package org.example.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class ReadFile {
     public String getFileText(File file) {
-        try (FileReader fileReader = new FileReader(file)) {
-            int c;
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder temp = new StringBuilder();
-            while ((c = fileReader.read()) != -1) {
-                temp.append((char) c);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                temp.append(line).append(System.lineSeparator());
             }
-            return String.valueOf(temp);
+            return temp.toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
